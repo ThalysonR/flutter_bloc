@@ -30,7 +30,6 @@ ListView _buildList(List<GithubNode> nodes) {
 
       return ListTile(
         title: Text(node.name),
-        leading: Text(node.id.toString()),
       );
     },
   );

@@ -26,7 +26,7 @@ class GithubRepositoriesRepositoryImpl implements GithubRepositoriesRepository {
     final QueryResult result = await graphQLClient.query(QueryOptions(
       document: _getNodesQuery,
       variables: {
-        'nRepositories': 10
+        'nRepositories': 50
       }
     ));
 
