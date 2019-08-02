@@ -9,15 +9,20 @@ import 'package:flutter_architecture/repository/user_repository.dart';
 import 'package:flutter_architecture/routes.dart';
 import 'package:flutter_architecture/screens/HomeScreen.dart';
 import 'package:flutter_architecture/screens/add_edit_screen.dart';
+import 'package:flutter_architecture/screens/github_repositories_screen.dart';
 import 'package:flutter_architecture/widgets/todos_bloc_provider.dart';
 import 'package:flutter_architecture/blocs/index.dart';
 import 'package:flutter_architecture/localization.dart';
 import 'package:flutter_architecture/theme.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
   TodosInteractor interactor = TodosInteractor(getRepository());
   UserRepository userRepository = AnonymousUserRepository();
+
+  await DotEnv().load('.env');
 
   runApp(Injector(
       todosInteractor: interactor,
@@ -29,10 +34,13 @@ void main() {
           theme: PmzTheme.theme,
           localizationsDelegates: [InheritedWidgetLocalizationsDelegate()],
           routes: {
+//            PmzRoutes.home: (context) {
+//              return HomeScreen(
+//                repository: Injector.of(context).userRepository,
+//              );
+//            },
             PmzRoutes.home: (context) {
-              return HomeScreen(
-                repository: Injector.of(context).userRepository,
-              );
+              return GithubRepositoriesScreen();
             },
             PmzRoutes.addTodo: (context) {
               return AddEditScreen(
